@@ -1,27 +1,20 @@
-using API.Data;
-using Microsoft.EntityFrameworkCore;
+using API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddApplcationService(builder.Configuration);
 
-builder.Services.AddControllers();
-builder.Services.AddDbContext<DataContext>(opt => {
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+builder.Services.AddCorsService();
 
-builder.Services.AddCors(options => {
-    options.AddPolicy("AllowAll", (policy) =>{
-        policy.WithOrigins("http://localhost:4200")
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials();
-    });
-});
+builder.Services.AddIdentityService(builder.Configuration);
 
 var app = builder.Build();
 
 app.UseCors("AllowAll"); 
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
