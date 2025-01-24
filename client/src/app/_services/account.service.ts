@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal, Signal } from '@angular/core';
 import { User } from '../_models/user.model';
 import { map } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   private http = inject(HttpClient)
+  private router = inject(Router)
   private readonly baseUrl = "https://localhost:5001/api/"
   readonly LOCALSTORAGE_KEY = "user"
   currentUser = signal<User | null>(null)
@@ -31,6 +33,7 @@ export class AccountService {
   logout = () => {
     localStorage.removeItem(this.LOCALSTORAGE_KEY)
     this.currentUser.set(null)
+    this.router.navigateByUrl('/')
   }
 
 }
