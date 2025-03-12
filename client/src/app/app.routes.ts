@@ -5,12 +5,25 @@ import { MembersDetailComponent } from './members/members-detail/members-detail.
 import { ListComponent } from './list/list.component';
 import { MessagesComponent } from './messages/messages.component';
 import { authGuard } from './_guards/auth.guard';
+import { TestErrorsComponent } from './error/test-errors/test-errors.component';
+import { NotFoundComponent } from './error/not-found/not-found.component';
+import { ServerErrorComponent } from './error/server-error/server-error.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
-    { path: 'members', component: MembersListComponent, canActivate: [authGuard] },
-    { path: 'members/:id', component: MembersDetailComponent, canActivate: [authGuard] },
-    { path: 'lists', component: ListComponent, canActivate: [authGuard] },
-    { path: 'messages', component: MessagesComponent, canActivate: [authGuard] },
+    {
+        path: '',
+        runGuardsAndResolvers: 'always',
+        canActivate: [authGuard],
+        children: [
+            { path: 'members', component: MembersListComponent },
+            { path: 'members/:id', component: MembersDetailComponent },
+            { path: 'lists', component: ListComponent },
+            { path: 'messages', component: MessagesComponent },
+        ]
+    },
+    { path: 'error', component: TestErrorsComponent },
+    { path: 'not-found', component: NotFoundComponent },
+    { path: 'server-error', component: ServerErrorComponent },
     { path: '**', component: HomeComponent, pathMatch: 'full' }
 ];

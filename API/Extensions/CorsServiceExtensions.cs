@@ -7,7 +7,7 @@ public static class CorsServiceExtensions
     public static IServiceCollection AddCorsService(this IServiceCollection services) {
        services.AddCors(options => {
             options.AddPolicy("AllowAll", (policy) =>{
-                policy.WithOrigins("http://localhost:4200")
+                policy.WithOrigins("http://localhost:4201")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials();
