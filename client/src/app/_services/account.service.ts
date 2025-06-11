@@ -3,6 +3,7 @@ import { inject, Injectable, signal, Signal } from '@angular/core';
 import { User } from '../_models/user.model';
 import { map } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class AccountService {
   private http = inject(HttpClient)
   private router = inject(Router)
-  private readonly baseUrl = "https://localhost:5001/api/"
+  private readonly baseUrl = environment.apiUrl;
   readonly LOCALSTORAGE_KEY = "user"
   currentUser = signal<User | null>(null)
 

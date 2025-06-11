@@ -11,12 +11,9 @@ import { RegisterComponent } from "../register/register.component";
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-  private http = inject(HttpClient)
   registerMode = false
-  users: any[] = []
 
   ngOnInit() {
-    this.getUsers()
   }
 
   closeRegisterComponent = () => {
@@ -25,16 +22,6 @@ export class HomeComponent implements OnInit {
 
   registerToggle = () => {
     this.registerMode = !this.registerMode
-  }
-
-  getUsers = () => {
-    this.http.get("https://localhost:5001/api/users").subscribe({
-      next: (result: any) => {
-        this.users = result
-      },
-      error: (err) => console.log(err),
-      complete: () => console.log("Request Completed")
-    })
   }
 
 }
